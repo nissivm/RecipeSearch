@@ -29,9 +29,22 @@
 		14CABE642DE7624C0082A8E4 /* RecipeSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		14CAF3E92DE8CDD70082A8E4 /* Exceptions for "RecipeSearch" folder in "RecipeSearch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 14CABE4C2DE7624B0082A8E4 /* RecipeSearch */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		14CABE4F2DE7624B0082A8E4 /* RecipeSearch */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				14CAF3E92DE8CDD70082A8E4 /* Exceptions for "RecipeSearch" folder in "RecipeSearch" target */,
+			);
 			path = RecipeSearch;
 			sourceTree = "<group>";
 		};
@@ -273,6 +286,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ID = f65c5835;
+				APP_KEY = e5253e1a42369eaeb971cbb25c3947e0;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -337,6 +352,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ID = f65c5835;
+				APP_KEY = e5253e1a42369eaeb971cbb25c3947e0;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -400,6 +417,7 @@
 				DEVELOPMENT_TEAM = LN34JK9Z78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RecipeSearch/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Recipe Search";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -431,6 +449,7 @@
 				DEVELOPMENT_TEAM = LN34JK9Z78;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RecipeSearch/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Recipe Search";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
