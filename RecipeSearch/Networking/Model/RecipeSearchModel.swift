@@ -3,12 +3,10 @@ import Foundation
 // MARK: - RecipeSearchModel
 
 struct RecipeSearchModel: Codable {
-    let from, to, count: Int
     let links: Links
     let hits: [Hit]
 
     enum CodingKeys: String, CodingKey {
-        case from, to, count
         case links = "_links"
         case hits
     }
@@ -17,7 +15,7 @@ struct RecipeSearchModel: Codable {
 // MARK: - Hit
 
 struct Hit: Codable {
-    let recipe: Recipe
+    let recipe: CodableRecipe
 
     enum CodingKeys: String, CodingKey {
         case recipe
@@ -42,7 +40,8 @@ struct Next: Codable {
 
 // MARK: - Recipe
 
-struct Recipe: Codable {
+struct CodableRecipe: Codable {
+    let uri: String
     let label: String
     let images: Images
     let source: String
@@ -50,7 +49,7 @@ struct Recipe: Codable {
     let cuisineType: [String]
 
     enum CodingKeys: String, CodingKey {
-        case label, images, source, url, cuisineType
+        case uri, label, images, source, url, cuisineType
     }
 }
 
