@@ -2,7 +2,7 @@ import Foundation
 
 protocol APIClientProtocol {
     func execute<T: Decodable>(type: T.Type, with requestable: URLRequestable) async throws -> T
-    func executeNext<T: Decodable>(type: T.Type, with url: URL?) async throws -> T
+    func executeNext<T: Decodable>(type: T.Type, with url: URL) async throws -> T
 }
 
 struct APIClient: APIClientProtocol {
@@ -13,10 +13,7 @@ struct APIClient: APIClientProtocol {
         return try await performRequest(type: type, with: request)
     }
 
-    func executeNext<T: Decodable>(type: T.Type, with url: URL?) async throws -> T {
-        guard let url else {
-            throw RecipeSearchError.invalidUrl
-        }
+    func executeNext<T: Decodable>(type: T.Type, with url: URL) async throws -> T {
         let request = URLRequest(url: url)
         return try await performRequest(type: type, with: request)
     }

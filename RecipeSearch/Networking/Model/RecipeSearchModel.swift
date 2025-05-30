@@ -3,7 +3,7 @@ import Foundation
 // MARK: - RecipeSearchModel
 
 struct RecipeSearchModel: Codable {
-    let links: Links
+    let links: Links?
     let hits: [Hit]
 
     enum CodingKeys: String, CodingKey {
@@ -25,7 +25,7 @@ struct Hit: Codable {
 // MARK: - Links
 
 struct Links: Codable {
-    let next: Next
+    let next: Next?
 
     enum CodingKeys: String, CodingKey {
         case next
@@ -35,7 +35,7 @@ struct Links: Codable {
 // MARK: - Next
 
 struct Next: Codable {
-    let href, title: String
+    let href, title: String?
 }
 
 // MARK: - Recipe
