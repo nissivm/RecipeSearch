@@ -6,13 +6,7 @@ struct RecipeCell: View {
     var body: some View {
         ZStack {
             HStack {
-                AsyncImage(url: recipe.imageUrl) { phase in
-                    if let image = phase.image {
-                        setup(image: image)
-                    } else {
-                        setup(image: Image(Images.placeholder))
-                    }
-                }
+                CachedAsyncImage(url: recipe.imageUrl)
                 
                 VStack(alignment: .leading) {
                     Text(recipe.name)
@@ -42,25 +36,10 @@ struct RecipeCell: View {
     }
 }
 
-// MARK: - Image setup
-
-private extension RecipeCell {
-    @ViewBuilder
-    func setup(image: Image) -> some View {
-        image
-            .resizable()
-            .scaledToFill()
-            .frame(width: 100, height: 100)
-            .cornerRadius(10)
-            .clipped()
-    }
-}
-
 // MARK: - Components content
 
 private extension RecipeCell {
     enum Images {
-        static let placeholder = "placeholder"
         static let heartFill = "heart.fill"
         static let heart = "heart"
     }
