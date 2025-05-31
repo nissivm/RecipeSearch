@@ -11,7 +11,6 @@ struct RecipeCell: View {
                 VStack(alignment: .leading) {
                     Text(recipe.name)
                         .font(.headline)
-                        .lineLimit(1)
                     
                     Text(recipe.cuisines)
                         .font(.subheadline)

@@ -1,6 +1,6 @@
 import Foundation
 
-struct Recipe: Identifiable {
+struct Recipe: Identifiable, Hashable {
     let id: String
     let name: String
     let source: String
