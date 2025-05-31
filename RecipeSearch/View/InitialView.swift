@@ -6,10 +6,10 @@ struct InitialView: View {
     @State private var ingredient: String = ""
     @State private var showPicker: Bool = false
     @State private var selectedCuisine: String = "Any"
-    @State private var path = NavigationPath()
+    @StateObject private var coordinator = AppCoordinator.shared
 
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $coordinator.path) {
             ZStack {
                 backgroundImage
                 
@@ -44,8 +44,9 @@ struct InitialView: View {
                     Spacer()
                 }
             }
+            .navigationTitle(Title.screen)
             .navigationDestination(for: SearchData.self) { data in
-                AnyView(Text("Hello, World!"))
+                ScreenAssembler.searchedRecipesView(using: data)
             }
             .navigationDestination(for: String.self) { _ in
                 AnyView(Text("Hello, World! 2"))
@@ -62,7 +63,7 @@ private extension InitialView {
         Image(Images.background)
             .resizable()
             .scaledToFill()
-            .edgesIgnoringSafeArea(.all)
+            .edgesIgnoringSafeArea([.leading, .trailing, .bottom])
     }
 
     @ViewBuilder
@@ -86,7 +87,7 @@ private extension InitialView {
                 }
             }
         }) {
-            Text(Title.searchRecipes)
+            Text(Title.searchRecipesButton)
                 .font(.title)
                 .foregroundColor(.white)
                 .padding()
@@ -141,11 +142,11 @@ private extension InitialView {
                 ingredient: ingredient,
                 cuisine: selectedCuisine == "Any" ? "" : selectedCuisine
             )
-            path.append(searchData)
+            coordinator.navigateToSearchedRecipes(using: searchData)
         }) {
             HStack {
                 Spacer()
-                Text(Title.startSearch)
+                Text(Title.startSearchButton)
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(height: 40)
@@ -173,9 +174,9 @@ private extension InitialView {
     @ViewBuilder
     var purpleMyRecipesButton: some View {
         Button(action: {
-            path.append(Navigation.pushMyRecipesScreen)
+            coordinator.navigateToMyRecipes()
         }) {
-            Text(Title.myRecipes)
+            Text(Title.myRecipesButton)
                 .font(.title)
                 .foregroundColor(.white)
                 .padding()
@@ -193,9 +194,10 @@ private extension InitialView {
 
 private extension InitialView {
     enum Title {
-        static let searchRecipes = "Search Recipes"
-        static let myRecipes = "MyRecipes"
-        static let startSearch = "Start search!"
+        static let screen = "Setup Search"
+        static let searchRecipesButton = "Search Recipes"
+        static let myRecipesButton = "MyRecipes"
+        static let startSearchButton = "Start search!"
     }
 
     enum Images {
@@ -219,14 +221,6 @@ private extension InitialView {
          "Korean", "Kosher", "Mediterranean", "Mexican",
          "Middle Eastern", "Nordic", "South American",
          "South East Asian"]
-    }
-}
-
-// MARK: - Navigation
-
-private extension InitialView {
-    enum Navigation {
-        static let pushMyRecipesScreen = "PushMyRecipesScreen"
     }
 }
 
