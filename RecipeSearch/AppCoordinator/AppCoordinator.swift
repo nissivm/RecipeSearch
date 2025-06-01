@@ -17,4 +17,8 @@ class AppCoordinator: ObservableObject {
     func navigateToRecipeDetailView(using recipe: Recipe) {
         path.append(recipe)
     }
+
+    func pop() {
+        path.removeLast()
+    }
 }

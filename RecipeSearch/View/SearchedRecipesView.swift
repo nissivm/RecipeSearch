@@ -34,6 +34,15 @@ struct SearchedRecipesView: View {
                 .padding()
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading:
+            Button(action: {
+                coordinator.pop()
+            }) {
+                Image(systemName: Images.backButton)
+                    .foregroundColor(.white)
+            }
+        )
         .navigationTitle(Title.screen)
         .navigationBarTitleDisplayMode(.inline)
         .taskFirstAppear {
@@ -120,6 +129,7 @@ private extension SearchedRecipesView {
 
     enum Images {
         static let background = "background"
+        static let backButton = "chevron.left"
     }
 
     enum Constants {

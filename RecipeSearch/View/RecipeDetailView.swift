@@ -4,6 +4,8 @@ import WebKit
 struct RecipeDetailView: View {
     let recipe: Recipe
 
+    @StateObject private var coordinator = AppCoordinator.shared
+
     var body: some View {
         ZStack {
             backgroundImage
@@ -25,6 +27,15 @@ struct RecipeDetailView: View {
                 .padding(.horizontal, 40)
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading:
+            Button(action: {
+                coordinator.pop()
+            }) {
+                Image(systemName: Images.backButton)
+                    .foregroundColor(.white)
+            }
+        )
         .navigationTitle(recipe.name)
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -47,6 +58,7 @@ private extension RecipeDetailView {
 private extension RecipeDetailView {
     enum Images {
         static let background = "background"
+        static let backButton = "chevron.left"
     }
 
     enum Title {
