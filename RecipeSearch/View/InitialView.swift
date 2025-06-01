@@ -6,6 +6,7 @@ struct InitialView: View {
     @State private var ingredient: String = ""
     @State private var showPicker: Bool = false
     @State private var selectedCuisine: String = "Any"
+
     @StateObject private var coordinator = AppCoordinator.shared
 
     var body: some View {
@@ -49,7 +50,7 @@ struct InitialView: View {
                 ScreenAssembler.searchedRecipesView(using: data)
             }
             .navigationDestination(for: String.self) { _ in
-                AnyView(Text("Hello, World! 2"))
+                ScreenAssembler.savedRecipesView()
             }
         }
     }
@@ -206,7 +207,7 @@ private extension InitialView {
     }
 
     enum Constants {
-        static let textFieldPlaceholder = "Type in an ingredient"
+        static let textFieldPlaceholder = "Type in 1 ingredient"
         static let cuisinePickerTitle = "Select a cuisine"
     }
 

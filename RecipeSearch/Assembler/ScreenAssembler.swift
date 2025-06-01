@@ -12,6 +12,11 @@ struct ScreenAssembler {
     }
 
     @ViewBuilder
+    static func savedRecipesView() -> some View {
+        SavedRecipesView(viewModel: SavedRecipesViewModel())
+    }
+
+    @ViewBuilder
     static func recipeDetailView(using recipe: Recipe) -> some View {
         RecipeDetailView(recipe: recipe)
     }
