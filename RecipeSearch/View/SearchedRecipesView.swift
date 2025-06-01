@@ -1,7 +1,11 @@
 import SwiftUI
+import SwiftData
 
 struct SearchedRecipesView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \SavedRecipe.name, order: .forward) private var saved: [SavedRecipe]
     @ObservedObject var viewModel: SearchedRecipesViewModel
+
     @StateObject private var coordinator = AppCoordinator.shared
     @State private var task: Task<Void, Never>?
 
@@ -14,15 +18,16 @@ struct SearchedRecipesView: View {
                 loadingView
             case .error:
                 errorView
-            case .success(let recipes):
+            case .success:
                 List {
-                    ForEach(recipes) { recipe in
-                        RecipeCell(recipe: recipe)
+                    ForEach(viewModel.allRecipes) { recipe in
+                        RecipeCell(recipe: recipe,
+                                   manageRecipeClosure: viewModel.manageRecipe(recipe, using: modelContext, and: saved))
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.clear)
                             .onAppear {
                                 task = Task {
-                                    await viewModel.fetchMoreRecipes(recipe)
+                                    await viewModel.fetchMoreRecipes(recipe, checkSavedUsing: saved)
                                 }
                             }
                             .onTapGesture {
@@ -46,7 +51,7 @@ struct SearchedRecipesView: View {
         .navigationTitle(Title.screen)
         .navigationBarTitleDisplayMode(.inline)
         .taskFirstAppear {
-            await viewModel.fetchRecipes()
+            await viewModel.fetchRecipes(checkSavedUsing: saved)
         }
         .onDisappear {
             task?.cancel()
@@ -95,7 +100,7 @@ private extension SearchedRecipesView {
 
                 Button(action: {
                     task = Task {
-                        await viewModel.fetchRecipes()
+                        await viewModel.fetchRecipes(checkSavedUsing: saved)
                     }
                 }) {
                     HStack {

@@ -1,31 +1,30 @@
 import Foundation
+import SwiftData
 
-class Recipe: ObservableObject, Identifiable, Hashable {
-    let id: String
-    let name: String
-    let source: String
-    let cuisines: String
-    let imageUrl: URL?
-    let url: URL?
-    @Published var isFavorite: Bool
+@Model
+final class SavedRecipe: Identifiable, Hashable {
+    @Attribute(.unique) var id: String
+    var name: String
+    var source: String
+    var cuisines: String
+    var imageUrl: URL?
+    var url: URL?
 
     init(id: String,
          name: String,
          source: String,
          cuisines: String,
          imageUrl: URL?,
-         url: URL?,
-         isFavorite: Bool) {
+         url: URL?) {
         self.id = id
         self.name = name
         self.source = source
         self.cuisines = cuisines
         self.imageUrl = imageUrl
         self.url = url
-        self.isFavorite = isFavorite
     }
 
-    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
+    static func == (lhs: SavedRecipe, rhs: SavedRecipe) -> Bool {
         lhs.id == rhs.id
     }
 

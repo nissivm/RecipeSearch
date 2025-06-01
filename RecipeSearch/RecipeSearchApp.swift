@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 @main
 struct RecipeSearchApp: App {
@@ -25,5 +26,6 @@ struct RecipeSearchApp: App {
         WindowGroup {
             InitialView()
         }
+        .modelContainer(for: SavedRecipe.self)
     }
 }

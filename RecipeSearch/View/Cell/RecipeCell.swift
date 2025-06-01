@@ -1,7 +1,13 @@
 import SwiftUI
 
 struct RecipeCell: View {
-    let recipe: Recipe
+    @ObservedObject private var recipe: Recipe
+    private let manageRecipeClosure: () -> Void
+
+    init(recipe: Recipe, manageRecipeClosure: @escaping @autoclosure () -> Void) {
+        self.recipe = recipe
+        self.manageRecipeClosure = manageRecipeClosure
+    }
 
     var body: some View {
         ZStack {
@@ -27,6 +33,9 @@ struct RecipeCell: View {
                 Image(systemName: recipe.isFavorite ? Images.heartFill : Images.heart)
                     .foregroundColor(recipe.isFavorite ? .red : .gray)
                     .font(.title2)
+                    .onTapGesture {
+                        manageRecipeClosure()
+                    }
             }
             .padding()
         }
@@ -47,18 +56,21 @@ private extension RecipeCell {
 // MARK: - Cell Preview
 
 #Preview {
+    let fakeRecipe = Recipe(
+        id: "",
+        name: "Rotisserie Chicken",
+        source: "Serious Eats",
+        cuisines: "mexican",
+        imageUrl: nil,
+        url: nil,
+        isFavorite: false
+    )
+
     VStack {
         Spacer()
         RecipeCell(
-            recipe: Recipe(
-                id: "",
-                name: "Rotisserie Chicken",
-                source: "Serious Eats",
-                cuisines: "mexican",
-                imageUrl: nil,
-                url: nil,
-                isFavorite: false
-            )
+            recipe: fakeRecipe,
+            manageRecipeClosure: { fakeRecipe.isFavorite.toggle() }()
         )
         .padding(.horizontal, 24.0)
         Spacer()
