@@ -12,22 +12,26 @@ struct SavedRecipesView: View {
         ZStack {
             backgroundImage
 
-            List {
-                ForEach(saved) { savedRecipe in
-                    SavedRecipeCell(recipe: savedRecipe)
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
-                        .onTapGesture {
-                            let recipe = viewModel.mapRecipeFromSavedRecipe(savedRecipe)
-                            coordinator.navigateToRecipeDetailView(using: recipe)
-                        }
+            if saved.isEmpty {
+                ErrorView(text: Title.errorView)
+            } else {
+                List {
+                    ForEach(saved) { savedRecipe in
+                        SavedRecipeCell(recipe: savedRecipe)
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
+                            .onTapGesture {
+                                let recipe = viewModel.mapRecipeFromSavedRecipe(savedRecipe)
+                                coordinator.navigateToRecipeDetailView(using: recipe)
+                            }
+                    }
+                    .onDelete { indexSet in
+                        viewModel.delete(from: saved, in: indexSet, using: modelContext)
+                    }
                 }
-                .onDelete { indexSet in
-                    viewModel.delete(from: saved, in: indexSet, using: modelContext)
-                }
+                .listStyle(.plain)
+                .padding()
             }
-            .listStyle(.plain)
-            .padding()
         }
         .navigationTitle(Title.screen)
         .customBackButton()
@@ -54,6 +58,7 @@ private extension SavedRecipesView {
 private extension SavedRecipesView {
     enum Title {
         static let screen = "My Recipes"
+        static let errorView = "You have no saved recipes, start adding some!"
     }
 
     enum Images {

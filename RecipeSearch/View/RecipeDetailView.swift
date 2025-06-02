@@ -14,17 +14,7 @@ struct RecipeDetailView: View {
                 WebView(url: url)
                     .edgesIgnoringSafeArea([.bottom])
             } else {
-                VStack {
-                    Text(Title.errorView)
-                        .font(.title3)
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
-                }
-                .background(Color.white.opacity(0.8))
-                .cornerRadius(20)
-                .padding(.horizontal, 40)
+                ErrorView(text: Title.errorView)
             }
         }
         .navigationTitle(recipe.name)

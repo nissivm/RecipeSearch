@@ -19,10 +19,13 @@ struct SearchedRecipesView: View {
             case .error:
                 errorView
             case .success:
-                List {
-                    ForEach(viewModel.allRecipes) { recipe in
-                        RecipeCell(recipe: recipe,
-                                   manageRecipeClosure: viewModel.manageRecipe(recipe, using: modelContext, and: saved))
+                if viewModel.allRecipes.isEmpty {
+                    ErrorView(text: Title.errorView)
+                } else {
+                    List {
+                        ForEach(viewModel.allRecipes) { recipe in
+                            RecipeCell(recipe: recipe,
+                                       manageRecipeClosure: viewModel.manageRecipe(recipe, using: modelContext, and: saved))
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.clear)
                             .onAppear {
@@ -33,10 +36,11 @@ struct SearchedRecipesView: View {
                             .onTapGesture {
                                 coordinator.navigateToRecipeDetailView(using: recipe)
                             }
+                        }
                     }
+                    .listStyle(.plain)
+                    .padding()
                 }
-                .listStyle(.plain)
-                .padding()
             }
         }
         .navigationTitle(Title.screen)
@@ -121,6 +125,7 @@ private extension SearchedRecipesView {
 private extension SearchedRecipesView {
     enum Title {
         static let screen = "Search results"
+        static let errorView = "OOps, we don't have any recipes for your ingredient, please try again with another one 🙂"
     }
 
     enum Images {
