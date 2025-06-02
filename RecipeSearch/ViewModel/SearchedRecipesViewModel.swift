@@ -56,7 +56,7 @@ class SearchedRecipesViewModel: ObservableObject {
         } catch {}
     }
 
-    func manageRecipe(_ recipe: Recipe, using modelContext: ModelContext, and savedRecipes: [SavedRecipe]) {
+    func manageRecipe(_ recipe: Recipe, using modelContext: ModelContextProtocol, and savedRecipes: [SavedRecipe]) {
         if !recipe.isFavorite {
             saveNewRecipe(recipe, using: modelContext)
         } else {
@@ -100,7 +100,7 @@ private extension SearchedRecipesViewModel {
         return saved.first != nil
     }
 
-    func saveNewRecipe(_ recipe: Recipe, using modelContext: ModelContext) {
+    func saveNewRecipe(_ recipe: Recipe, using modelContext: ModelContextProtocol) {
         recipe.isFavorite = true
 
         let newRecipe = SavedRecipe(
@@ -116,7 +116,7 @@ private extension SearchedRecipesViewModel {
         try? modelContext.save()
     }
 
-    func deleteRecipe(_ recipe: Recipe, using modelContext: ModelContext, and savedRecipes: [SavedRecipe]) {
+    func deleteRecipe(_ recipe: Recipe, using modelContext: ModelContextProtocol, and savedRecipes: [SavedRecipe]) {
         recipe.isFavorite = false
 
         let saved = savedRecipes.filter { $0.id == recipe.id }

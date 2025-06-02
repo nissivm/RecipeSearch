@@ -14,7 +14,7 @@ struct SavedRecipesViewModel {
         )
     }
 
-    func delete(from savedRecipes: [SavedRecipe], in offsets: IndexSet, using modelContext: ModelContext) {
+    func delete(from savedRecipes: [SavedRecipe], in offsets: IndexSet, using modelContext: ModelContextProtocol) {
         for index in offsets {
             let recipe = savedRecipes[index]
             modelContext.delete(recipe)
