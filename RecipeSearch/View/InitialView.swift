@@ -17,7 +17,7 @@ struct InitialView: View {
                 VStack {
                     Spacer()
 
-                    greenSearchRecipesButton
+                    searchRecipesButton
 
                     if showIngredientInput {
                         VStack {
@@ -40,7 +40,7 @@ struct InitialView: View {
                         .opacity(ingredientInputOpacity)
                     }
 
-                    purpleMyRecipesButton
+                    myRecipesButton
                     
                     Spacer()
                 }
@@ -68,7 +68,7 @@ private extension InitialView {
     }
 
     @ViewBuilder
-    var greenSearchRecipesButton: some View {
+    var searchRecipesButton: some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.5)) {
                 showIngredientInput.toggle()
@@ -93,7 +93,7 @@ private extension InitialView {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.green)
+                .background(Color("light-cobalt"))
                 .cornerRadius(15)
         }
         .padding(.horizontal, 40)
@@ -173,7 +173,7 @@ private extension InitialView {
     }
 
     @ViewBuilder
-    var purpleMyRecipesButton: some View {
+    var myRecipesButton: some View {
         Button(action: {
             coordinator.navigateToMyRecipes()
         }) {
@@ -182,7 +182,7 @@ private extension InitialView {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.purple)
+                .background(Color("cobalt"))
                 .cornerRadius(15)
         }
         .padding(.horizontal, 40)
