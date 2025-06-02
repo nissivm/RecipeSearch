@@ -39,17 +39,8 @@ struct SearchedRecipesView: View {
                 .padding()
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading:
-            Button(action: {
-                coordinator.pop()
-            }) {
-                Image(systemName: Images.backButton)
-                    .foregroundColor(.white)
-            }
-        )
         .navigationTitle(Title.screen)
-        .navigationBarTitleDisplayMode(.inline)
+        .customBackButton()
         .taskFirstAppear {
             await viewModel.fetchRecipes(checkSavedUsing: saved)
         }

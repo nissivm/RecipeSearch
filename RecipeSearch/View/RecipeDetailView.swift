@@ -27,17 +27,8 @@ struct RecipeDetailView: View {
                 .padding(.horizontal, 40)
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading:
-            Button(action: {
-                coordinator.pop()
-            }) {
-                Image(systemName: Images.backButton)
-                    .foregroundColor(.white)
-            }
-        )
         .navigationTitle(recipe.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .customBackButton()
     }
 }
 

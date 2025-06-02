@@ -29,17 +29,8 @@ struct SavedRecipesView: View {
             .listStyle(.plain)
             .padding()
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading:
-            Button(action: {
-                coordinator.pop()
-            }) {
-                Image(systemName: Images.backButton)
-                    .foregroundColor(.white)
-            }
-        )
         .navigationTitle(Title.screen)
-        .navigationBarTitleDisplayMode(.inline)
+        .customBackButton()
         .navigationDestination(for: Recipe.self) { recipe in
             ScreenAssembler.recipeDetailView(using: recipe)
         }
