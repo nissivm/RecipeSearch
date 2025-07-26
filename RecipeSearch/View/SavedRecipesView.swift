@@ -10,8 +10,6 @@ struct SavedRecipesView: View {
 
     var body: some View {
         ZStack {
-            backgroundImage
-
             if saved.isEmpty {
                 ErrorView(text: Title.errorView)
             } else {
@@ -33,23 +31,12 @@ struct SavedRecipesView: View {
                 .padding()
             }
         }
+        .background(Color.softCobalt)
         .navigationTitle(Title.screen)
         .customBackButton()
         .navigationDestination(for: Recipe.self) { recipe in
             ScreenAssembler.recipeDetailView(using: recipe)
         }
-    }
-}
-
-// MARK: - Screen components
-
-private extension SavedRecipesView {
-    @ViewBuilder
-    var backgroundImage: some View {
-        Image(Images.background)
-            .resizable()
-            .scaledToFill()
-            .edgesIgnoringSafeArea([.leading, .trailing, .bottom])
     }
 }
 

@@ -11,8 +11,6 @@ struct SearchedRecipesView: View {
 
     var body: some View {
         ZStack {
-            backgroundImage
-
             switch viewModel.searchState {
             case .loading:
                 loadingView
@@ -43,6 +41,7 @@ struct SearchedRecipesView: View {
                 }
             }
         }
+        .background(viewModel.searchState == .success ? Color.softCobalt : Color.white)
         .navigationTitle(Title.screen)
         .customBackButton()
         .taskFirstAppear {
@@ -61,14 +60,6 @@ struct SearchedRecipesView: View {
 
 private extension SearchedRecipesView {
     @ViewBuilder
-    var backgroundImage: some View {
-        Image(Images.background)
-            .resizable()
-            .scaledToFill()
-            .edgesIgnoringSafeArea([.leading, .trailing, .bottom])
-    }
-
-    @ViewBuilder
     var loadingView: some View {
         ZStack {
             ProgressView(Constants.progressViewTitle)
@@ -76,7 +67,7 @@ private extension SearchedRecipesView {
                 .frame(maxWidth: .infinity, alignment: .center)
         }
         .padding()
-        .background(Color.white.opacity(0.8))
+        .background(Color.softCobalt.opacity(0.8))
         .cornerRadius(20)
         .frame(width: 220)
     }
@@ -112,7 +103,7 @@ private extension SearchedRecipesView {
                     .padding(.bottom, 16)
                 }
             }
-            .background(Color.white.opacity(0.8))
+            .background(Color.softCobalt.opacity(0.8))
             .cornerRadius(20)
             .padding(.horizontal, 40)
             Spacer()

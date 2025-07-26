@@ -8,8 +8,6 @@ struct RecipeDetailView: View {
 
     var body: some View {
         ZStack {
-            backgroundImage
-
             if let url = recipe.url {
                 WebView(url: url)
                     .edgesIgnoringSafeArea([.bottom])
@@ -17,20 +15,9 @@ struct RecipeDetailView: View {
                 ErrorView(text: Title.errorView)
             }
         }
+        .background(Color.softCobalt)
         .navigationTitle(recipe.name)
         .customBackButton()
-    }
-}
-
-// MARK: - Screen components
-
-private extension RecipeDetailView {
-    @ViewBuilder
-    var backgroundImage: some View {
-        Image(Images.background)
-            .resizable()
-            .scaledToFill()
-            .edgesIgnoringSafeArea([.leading, .trailing, .bottom])
     }
 }
 

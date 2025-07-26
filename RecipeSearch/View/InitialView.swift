@@ -111,6 +111,13 @@ private extension InitialView {
             .padding(.horizontal, 16)
             .padding(.top, 10)
             .focused($isTextFieldFocused)
+            .onChange(of: isTextFieldFocused) { _, _ in
+                if isTextFieldFocused {
+                    withAnimation {
+                        showPicker = false
+                    }
+                }
+            }
     }
 
     @ViewBuilder
@@ -118,6 +125,7 @@ private extension InitialView {
         Button(action: {
             withAnimation {
                 showPicker.toggle()
+                isTextFieldFocused = false
             }
         }) {
             HStack {
