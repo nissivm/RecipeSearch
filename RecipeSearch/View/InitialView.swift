@@ -6,6 +6,7 @@ struct InitialView: View {
     @State private var ingredient: String = ""
     @State private var showPicker: Bool = false
     @State private var selectedCuisine: String = "Any"
+    @FocusState private var isTextFieldFocused: Bool
 
     @StateObject private var coordinator = AppCoordinator.shared
 
@@ -65,6 +66,9 @@ private extension InitialView {
             .resizable()
             .scaledToFill()
             .edgesIgnoringSafeArea([.leading, .trailing, .bottom])
+            .onTapGesture {
+                isTextFieldFocused = false
+            }
     }
 
     @ViewBuilder
@@ -106,6 +110,7 @@ private extension InitialView {
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding(.horizontal, 16)
             .padding(.top, 10)
+            .focused($isTextFieldFocused)
     }
 
     @ViewBuilder
