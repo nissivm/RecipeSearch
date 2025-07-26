@@ -36,6 +36,3 @@ Shows the details of a recipe, by loading it's page from the web
 
 Showcases user's saved recipes. You can delete recipes from there as well, by sliding to the left.
 
-
-
-Hope you guys enjoy my app 🥰
