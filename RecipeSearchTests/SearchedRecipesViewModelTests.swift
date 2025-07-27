@@ -18,6 +18,31 @@ struct SearchedRecipesViewModelTests {
         )
     }
 
+    @Test
+    func testScreenTitle() {
+        #expect(sut.screenTitle == "Search results")
+    }
+
+    @Test
+    func testErrorViewScreenTitle() {
+        #expect(sut.errorViewScreenTitle == "OOps, we don't have any recipes for your ingredient, please try again with another one 🙂")
+    }
+
+    @Test
+    func testProgressViewTitle() {
+        #expect(sut.progressViewTitle == "Loading Recipes...")
+    }
+
+    @Test
+    func testErrorViewTitle() {
+        #expect(sut.errorViewTitle == "OOps, something went wrong while fetching recipes!")
+    }
+
+    @Test
+    func testTryAgainButtonTitle() {
+        #expect(sut.tryAgainButtonTitle == "Try again")
+    }
+
     @MainActor @Test
     func testFetchRecipesSuccess() async {
         // Given

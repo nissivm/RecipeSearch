@@ -18,7 +18,7 @@ struct SearchedRecipesView: View {
                 errorView
             case .success:
                 if viewModel.allRecipes.isEmpty {
-                    ErrorView(text: Title.errorView)
+                    ErrorView(text: viewModel.errorViewScreenTitle)
                 } else {
                     List {
                         ForEach(viewModel.allRecipes) { recipe in
@@ -42,7 +42,7 @@ struct SearchedRecipesView: View {
             }
         }
         .background(viewModel.searchState == .success ? Color.softCobalt : Color.white)
-        .navigationTitle(Title.screen)
+        .navigationTitle(viewModel.screenTitle)
         .customBackButton()
         .taskFirstAppear {
             await viewModel.fetchRecipes(checkSavedUsing: saved)
@@ -62,7 +62,7 @@ private extension SearchedRecipesView {
     @ViewBuilder
     var loadingView: some View {
         ZStack {
-            ProgressView(Constants.progressViewTitle)
+            ProgressView(viewModel.progressViewTitle)
                 .progressViewStyle(.circular)
                 .frame(maxWidth: .infinity, alignment: .center)
         }
@@ -77,7 +77,7 @@ private extension SearchedRecipesView {
         VStack {
             Spacer()
             VStack {
-                Text(Constants.errorViewTitle)
+                Text(viewModel.errorViewTitle)
                     .font(.title3)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
@@ -91,7 +91,7 @@ private extension SearchedRecipesView {
                 }) {
                     HStack {
                         Spacer()
-                        Text(Constants.tryAgainButtonTitle)
+                        Text(viewModel.tryAgainButtonTitle)
                             .font(.headline)
                             .foregroundColor(.white)
                             .frame(height: 40)
@@ -114,20 +114,9 @@ private extension SearchedRecipesView {
 // MARK: - Components content
 
 private extension SearchedRecipesView {
-    enum Title {
-        static let screen = "Search results"
-        static let errorView = "OOps, we don't have any recipes for your ingredient, please try again with another one 🙂"
-    }
-
     enum Images {
         static let background = "background"
         static let backButton = "chevron.left"
-    }
-
-    enum Constants {
-        static let progressViewTitle = "Loading Recipes..."
-        static let errorViewTitle = "OOps, something went wrong while fetching recipes!"
-        static let tryAgainButtonTitle = "Try again"
     }
 }
 

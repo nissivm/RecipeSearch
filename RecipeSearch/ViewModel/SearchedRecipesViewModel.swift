@@ -22,6 +22,26 @@ class SearchedRecipesViewModel: ObservableObject {
         self.apiClient = apiClient
     }
 
+    var screenTitle: String {
+        "Search results"
+    }
+
+    var errorViewScreenTitle: String {
+        "OOps, we don't have any recipes for your ingredient, please try again with another one 🙂"
+    }
+
+    var progressViewTitle: String {
+        "Loading Recipes..."
+    }
+
+    var errorViewTitle: String {
+        "OOps, something went wrong while fetching recipes!"
+    }
+
+    var tryAgainButtonTitle: String {
+        "Try again"
+    }
+
     @MainActor
     func fetchRecipes(checkSavedUsing savedRecipes: [SavedRecipe]) async {
         searchState = .loading
