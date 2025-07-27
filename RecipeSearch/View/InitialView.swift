@@ -220,8 +220,6 @@ private extension InitialView {
 
 // MARK: - Screen Preview
 
-struct InitialView_Previews: PreviewProvider {
-    static var previews: some View {
-        InitialView(viewModel: InitialViewModel())
-    }
+#Preview {
+    InitialView(viewModel: InitialViewModel())
 }
