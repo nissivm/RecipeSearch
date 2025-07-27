@@ -2,6 +2,11 @@ import SwiftUI
 
 struct ScreenAssembler {
     @ViewBuilder
+    static func initialView() -> some View {
+        InitialView(viewModel: InitialViewModel())
+    }
+
+    @ViewBuilder
     static func searchedRecipesView(using data: SearchData) -> some View {
         SearchedRecipesView(
             viewModel: SearchedRecipesViewModel(

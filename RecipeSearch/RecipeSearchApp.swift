@@ -24,7 +24,7 @@ struct RecipeSearchApp: App {
 
     var body: some Scene {
         WindowGroup {
-            InitialView()
+            ScreenAssembler.initialView()
         }
         .modelContainer(for: SavedRecipe.self)
     }

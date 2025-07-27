@@ -4,9 +4,11 @@ struct InitialView: View {
     @State private var showIngredientInput: Bool = false
     @State private var ingredientInputOpacity: Double = 0
     @State private var ingredient: String = ""
+    @State private var showStartSearchButton: Bool = false
     @State private var showPicker: Bool = false
-    @State private var selectedCuisine: String = "Any"
+    @State private var selectedCuisine: String = "Any Cuisine"
     @FocusState private var isTextFieldFocused: Bool
+    let viewModel: InitialViewModel
 
     @StateObject private var coordinator = AppCoordinator.shared
 
@@ -26,7 +28,7 @@ struct InitialView: View {
 
                             selectCuisineButton
 
-                            if !ingredient.isEmpty {
+                            if showStartSearchButton {
                                 startSearchButton
                             }
                             
@@ -46,7 +48,7 @@ struct InitialView: View {
                     Spacer()
                 }
             }
-            .navigationTitle(Title.screen)
+            .navigationTitle(viewModel.screenTitle)
             .navigationDestination(for: SearchData.self) { data in
                 ScreenAssembler.searchedRecipesView(using: data)
             }
@@ -92,12 +94,12 @@ private extension InitialView {
                 }
             }
         }) {
-            Text(Title.searchRecipesButton)
+            Text(viewModel.searchRecipesButtonTitle)
                 .font(.title)
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color("light-cobalt"))
+                .background(Color.lightCobalt)
                 .cornerRadius(15)
         }
         .padding(.horizontal, 40)
@@ -106,7 +108,7 @@ private extension InitialView {
 
     @ViewBuilder
     var ingredientTextField: some View {
-        TextField(Constants.textFieldPlaceholder, text: $ingredient)
+        TextField(viewModel.textFieldPlaceholder, text: $ingredient)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding(.horizontal, 16)
             .padding(.top, 10)
@@ -117,6 +119,9 @@ private extension InitialView {
                         showPicker = false
                     }
                 }
+            }
+            .onChange(of: ingredient) { _, _ in
+                showStartSearchButton = viewModel.hasLetters(ingredient)
             }
     }
 
@@ -129,7 +134,7 @@ private extension InitialView {
             }
         }) {
             HStack {
-                Text(selectCuisineButtonTitle)
+                Text(selectedCuisine)
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding(.leading, 16)
@@ -154,13 +159,13 @@ private extension InitialView {
         Button(action: {
             let searchData = SearchData(
                 ingredient: ingredient,
-                cuisine: selectedCuisine == "Any" ? "" : selectedCuisine
+                cuisine: viewModel.searchDataCuisine(selectedCuisine)
             )
             coordinator.navigateToSearchedRecipes(using: searchData)
         }) {
             HStack {
                 Spacer()
-                Text(Title.startSearchButton)
+                Text(viewModel.startSearchButtonTitle)
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(height: 40)
@@ -175,8 +180,8 @@ private extension InitialView {
 
     @ViewBuilder
     var cuisinePicker: some View {
-        Picker(Constants.cuisinePickerTitle, selection: $selectedCuisine) {
-            ForEach(cuisines, id: \.self) { option in
+        Picker(viewModel.cuisinePickerTitle, selection: $selectedCuisine) {
+            ForEach(viewModel.cuisines, id: \.self) { option in
                 Text(option)
             }
         }
@@ -190,12 +195,12 @@ private extension InitialView {
         Button(action: {
             coordinator.navigateToMyRecipes()
         }) {
-            Text(Title.myRecipesButton)
+            Text(viewModel.myRecipesButtonTitle)
                 .font(.title)
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color("cobalt"))
+                .background(Color.cobalt)
                 .cornerRadius(15)
         }
         .padding(.horizontal, 40)
@@ -207,34 +212,9 @@ private extension InitialView {
 // MARK: - Components content
 
 private extension InitialView {
-    enum Title {
-        static let screen = "Setup Search"
-        static let searchRecipesButton = "Search Recipes"
-        static let myRecipesButton = "MyRecipes"
-        static let startSearchButton = "Start search!"
-    }
-
     enum Images {
         static let background = "background"
         static let searchIcon = "magnifyingglass"
-    }
-
-    enum Constants {
-        static let textFieldPlaceholder = "Type in 1 ingredient"
-        static let cuisinePickerTitle = "Select a cuisine"
-    }
-
-    var selectCuisineButtonTitle: String {
-        "\(selectedCuisine == "Any" ? "Any Cuisine" : selectedCuisine)"
-    }
-
-    var cuisines: [String] {
-        ["Any", "American", "Asian", "British", "Caribbean",
-         "Central Europe", "Chinese", "Eastern Europe",
-         "French", "Greek", "Indian", "Italian", "Japanese",
-         "Korean", "Kosher", "Mediterranean", "Mexican",
-         "Middle Eastern", "Nordic", "South American",
-         "South East Asian"]
     }
 }
 
@@ -242,6 +222,6 @@ private extension InitialView {
 
 struct InitialView_Previews: PreviewProvider {
     static var previews: some View {
-        InitialView()
+        InitialView(viewModel: InitialViewModel())
     }
 }
