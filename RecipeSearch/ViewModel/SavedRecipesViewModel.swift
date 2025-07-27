@@ -2,6 +2,14 @@ import Foundation
 import SwiftData
 
 struct SavedRecipesViewModel {
+    var screenTitle: String {
+        "My Recipes"
+    }
+
+    var errorViewTitle: String {
+        "You have no saved recipes, start adding some!"
+    }
+
     func mapRecipeFromSavedRecipe(_ savedRecipe: SavedRecipe) -> Recipe {
         Recipe(
             id: savedRecipe.id,

@@ -11,7 +11,7 @@ struct SavedRecipesView: View {
     var body: some View {
         ZStack {
             if saved.isEmpty {
-                ErrorView(text: Title.errorView)
+                ErrorView(text: viewModel.errorViewTitle)
             } else {
                 List {
                     ForEach(saved) { savedRecipe in
@@ -32,7 +32,7 @@ struct SavedRecipesView: View {
             }
         }
         .background(Color.softCobalt)
-        .navigationTitle(Title.screen)
+        .navigationTitle(viewModel.screenTitle)
         .customBackButton()
         .navigationDestination(for: Recipe.self) { recipe in
             ScreenAssembler.recipeDetailView(using: recipe)
@@ -43,11 +43,6 @@ struct SavedRecipesView: View {
 // MARK: - Components content
 
 private extension SavedRecipesView {
-    enum Title {
-        static let screen = "My Recipes"
-        static let errorView = "You have no saved recipes, start adding some!"
-    }
-
     enum Images {
         static let background = "background"
         static let backButton = "chevron.left"
