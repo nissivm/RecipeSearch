@@ -1,14 +1,14 @@
-import XCTest
+import Foundation
+import Testing
 @testable import RecipeSearch
 
-final class SearchedRecipesViewModelTests: XCTestCase {
+struct SearchedRecipesViewModelTests {
     private let searchData = SearchData(ingredient: "chicken", cuisine: "italian")
-    private var mockAPIClient: MockAPIClient!
-    private var mockModelContext: MockModelContext!
-    private var sut: SearchedRecipesViewModel!
+    private let mockAPIClient: MockAPIClient
+    private let mockModelContext: MockModelContext
+    private let sut: SearchedRecipesViewModel
 
-    override func setUp() {
-        super.setUp()
+    init() {
         mockAPIClient = MockAPIClient()
         mockModelContext = MockModelContext()
 
@@ -18,15 +18,8 @@ final class SearchedRecipesViewModelTests: XCTestCase {
         )
     }
 
-    override func tearDown() {
-        super.tearDown()
-        mockAPIClient = nil
-        mockModelContext = nil
-        sut = nil
-    }
-    
-    @MainActor
-    func test_fetchRecipes_success() async {
+    @MainActor @Test
+    func testFetchRecipesSuccess() async {
         // Given
         mockAPIClient.shouldThrowError = false
     
@@ -34,11 +27,11 @@ final class SearchedRecipesViewModelTests: XCTestCase {
         await sut.fetchRecipes(checkSavedUsing: [])
 
         // Then
-        XCTAssertEqual(sut.allRecipes.count, 6)
+        #expect(sut.allRecipes.count == 6)
     }
 
-    @MainActor
-    func test_fetchRecipes_failure() async {
+    @MainActor @Test
+    func testFetchRecipesFailure() async {
         // Given
         mockAPIClient.shouldThrowError = true
     
@@ -46,11 +39,11 @@ final class SearchedRecipesViewModelTests: XCTestCase {
         await sut.fetchRecipes(checkSavedUsing: [])
 
         // Then
-        XCTAssertEqual(sut.allRecipes.count, 0)
+        #expect(sut.allRecipes.count == 0)
     }
 
-    @MainActor
-    func test_fetchMoreRecipes_success() async {
+    @MainActor @Test
+    func testFetchMoreRecipesSuccess() async {
         // Given
         mockAPIClient.shouldThrowError = false
     
@@ -59,11 +52,11 @@ final class SearchedRecipesViewModelTests: XCTestCase {
         await sut.fetchMoreRecipes(fakeRecipe, checkSavedUsing: [])
 
         // Then
-        XCTAssertEqual(sut.allRecipes.count, 12)
+        #expect(sut.allRecipes.count == 12)
     }
 
-    @MainActor
-    func test_fetchMoreRecipes_failure() async {
+    @MainActor @Test
+    func testFetchMoreRecipesFailure() async {
         // Given
         mockAPIClient.shouldThrowError = false
         await sut.fetchRecipes(checkSavedUsing: [])
@@ -73,25 +66,27 @@ final class SearchedRecipesViewModelTests: XCTestCase {
         await sut.fetchMoreRecipes(fakeRecipe, checkSavedUsing: [])
 
         // Then
-        XCTAssertEqual(sut.allRecipes.count, 6)
+        #expect(sut.allRecipes.count == 6)
     }
 
-    func test_manageRecipe_insert() {
+    @Test
+    func testManageRecipeInsert() {
         // When
         sut.manageRecipe(fakeRecipe, using: mockModelContext, and: [])
 
         // Then
-        XCTAssertTrue(mockModelContext.insertCalled)
-        XCTAssertTrue(mockModelContext.saveCalled)
+        #expect(mockModelContext.insertCalled == true)
+        #expect(mockModelContext.saveCalled == true)
     }
 
-    func test_manageRecipe_delete() {
+    @Test
+    func testManageRecipeDelete() {
         // When
         sut.manageRecipe(fakeRecipe2, using: mockModelContext, and: [fakeSavedRecipe])
 
         // Then
-        XCTAssertTrue(mockModelContext.deleteCalled)
-        XCTAssertTrue(mockModelContext.saveCalled)
+        #expect(mockModelContext.deleteCalled == true)
+        #expect(mockModelContext.saveCalled == true)
     }
 }
 
